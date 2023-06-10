@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface WalletService {
     public Wallet saveWallet(Wallet wallet);
     public List<Wallet> getAllWallets();
-    public Optional<Wallet> getById(long id);
+    public Wallet getById(long id);
     public void deleteAll();
+    public List<Wallet> getByUserId(long user_id);
 }

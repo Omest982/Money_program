@@ -1,18 +1,22 @@
-package com.Omest982.Money_program.service;
+package com.Omest982.Money_program.service.Imp;
 
 import com.Omest982.Money_program.model.Wallet;
 import com.Omest982.Money_program.repository.WalletRepository;
+import com.Omest982.Money_program.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class WalletServiceImp implements WalletService{
+public class WalletServiceImp implements WalletService {
+
+    private final WalletRepository walletRepository;
 
     @Autowired
-    WalletRepository walletRepository;
+    public WalletServiceImp(WalletRepository walletRepository) {
+        this.walletRepository = walletRepository;
+    }
 
     @Override
     public Wallet saveWallet(Wallet wallet) {
@@ -25,12 +29,17 @@ public class WalletServiceImp implements WalletService{
     }
 
     @Override
-    public Optional<Wallet> getById(long id) {
-        return walletRepository.findById(id);
+    public Wallet getById(long id) {
+        return walletRepository.findById(id).orElse(null);
     }
 
     @Override
     public void deleteAll() {
         walletRepository.deleteAll();
+    }
+
+    @Override
+    public List<Wallet> getByUserId(long user_id) {
+        return walletRepository.findByUserId(user_id);
     }
 }

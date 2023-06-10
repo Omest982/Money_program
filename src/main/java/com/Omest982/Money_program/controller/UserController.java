@@ -1,29 +1,27 @@
 package com.Omest982.Money_program.controller;
 
 import com.Omest982.Money_program.model.User;
-import com.Omest982.Money_program.model.Wallet;
 import com.Omest982.Money_program.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.Omest982.Money_program.utils.Checker;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService userService;
 
     @PostMapping("/add")
     public String add(@RequestBody User user){
-        userService.saveUser(user);
-        return "New user saved!";
-    }
-
-    @PostMapping("/addWallet")
-    public String addWallet(@RequestBody User user){
-        userService.updateUser(user);
-        return "New wallet added to user!";
+        if(Checker.fullUserCheck(user)){
+            userService.saveUser(user);
+            return "New user saved!";
+        }
+        return "Error! Something wrong!";
     }
 
     @GetMapping("/getAll")
@@ -32,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public User get(@RequestBody User user){
-        return userService.getUser(user.getUsername(), user.getPassword()).orElse(null);
+    public User get(@RequestParam String email, @RequestParam String password){
+        return userService.getUser(email, password);
     }
 
     @DeleteMapping("/deleteAll")

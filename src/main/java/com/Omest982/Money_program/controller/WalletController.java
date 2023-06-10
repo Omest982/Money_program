@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/wallet")
+@CrossOrigin
 public class WalletController {
     @Autowired
     WalletService walletService;
@@ -24,14 +26,23 @@ public class WalletController {
         walletService.deleteAll();
     }
 
+    @PostMapping("/updateMoney")
+    public String updateMoney(@RequestBody Wallet wallet, @RequestParam int money){
+        wallet.setMoney(money);
+        walletService.saveWallet(wallet);
+        return "Wallet successfully updated!";
+    }
 
     @GetMapping("/getAll")
-    public List<Wallet> getAll(){
-        return walletService.getAllWallets();
-    }
+    public List<Wallet> getAll(){return walletService.getAllWallets();}
 
     @GetMapping("/{id}")
     public Wallet getById(@PathVariable long id){
-        return walletService.getById(id).orElse(null);
+        return walletService.getById(id);
+    }
+
+    @GetMapping("/get")
+    public List<Wallet> getByUserId(@RequestParam long user_id){
+        return walletService.getByUserId(user_id);
     }
 }
