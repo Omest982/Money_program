@@ -1,13 +1,13 @@
 package com.Omest982.Money_program.utils;
 
-import com.Omest982.Money_program.model.User;
+import com.Omest982.Money_program.dto.UserDTO;
 
 public class Checker {
-    public static boolean fullUserCheck(User user) {
-        if(user.getEmail().split("@").length != 2){
+    public static boolean fullUserCheck(UserDTO userDTO) {
+        if(userDTO.getEmail().split("@").length != 2){
             return false;
         }
-        if(user.getPassword().length() < 6){
+        if(userDTO.getPassword().length() < 6){
             return false;
         }
         return true;

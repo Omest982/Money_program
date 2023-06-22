@@ -3,7 +3,6 @@ package com.Omest982.Money_program.service;
 import com.Omest982.Money_program.model.Wallet;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface WalletService {
     public Wallet saveWallet(Wallet wallet);

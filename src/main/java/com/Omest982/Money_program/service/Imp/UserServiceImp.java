@@ -3,38 +3,48 @@ package com.Omest982.Money_program.service.Imp;
 import com.Omest982.Money_program.model.Role;
 import com.Omest982.Money_program.model.Status;
 import com.Omest982.Money_program.model.User;
-import com.Omest982.Money_program.repository.RoleRepository;
 import com.Omest982.Money_program.repository.UserRepository;
 import com.Omest982.Money_program.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if(user == null){
+            throw  new UsernameNotFoundException("Username not found!");
+        }
+
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority(user.getRole().name()));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                roles
+        );
     }
 
     @Override
     public User saveUser(User user) {
-        Optional<Role> roleUser = roleRepository.findByName("ROLE_USER");
-        List<Role> userRoles = new ArrayList<>();
-        roleUser.ifPresent(userRoles::add);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(userRoles);
+        user.setPassword(user.getPassword());
+        user.setRole(Role.USER);
         user.setStatus(Status.ACTIVE);
         return userRepository.save(user);
     }
@@ -45,12 +55,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password).orElse(null);
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username);
     }
 
     @Override

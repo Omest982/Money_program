@@ -1,5 +1,6 @@
 package com.Omest982.Money_program.controller;
 
+import com.Omest982.Money_program.dto.UserDTO;
 import com.Omest982.Money_program.model.User;
 import com.Omest982.Money_program.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,9 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/add")
-    public String add(@RequestBody User user){
-        if(Checker.fullUserCheck(user)){
+    public String add(@RequestBody UserDTO userDTO){
+        if(Checker.fullUserCheck(userDTO)){
+            User user = UserDTO.dtoToUser(userDTO);
             userService.saveUser(user);
             return "New user saved!";
         }

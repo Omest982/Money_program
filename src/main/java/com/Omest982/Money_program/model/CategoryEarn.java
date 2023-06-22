@@ -1,7 +1,10 @@
 package com.Omest982.Money_program.model;
 
 import com.Omest982.Money_program.model.base.BaseAccountEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category_spends")
-public class CategorySpend extends BaseAccountEntity {
-
-    private int budget;
+@Table(name = "category_earns")
+public class CategoryEarn extends BaseAccountEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

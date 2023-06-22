@@ -3,7 +3,6 @@ package com.Omest982.Money_program.service.Imp;
 import com.Omest982.Money_program.model.CategorySpend;
 import com.Omest982.Money_program.repository.CategorySpendRepository;
 import com.Omest982.Money_program.service.CategorySpendService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class CategorySpendServiceImp implements CategorySpendService {
 
     private final CategorySpendRepository categorySpendRepository;
 
-    @Autowired
     public CategorySpendServiceImp(CategorySpendRepository categorySpendRepository) {
         this.categorySpendRepository = categorySpendRepository;
     }
