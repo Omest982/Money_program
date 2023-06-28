@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "category_spends")
-public class CategorySpend extends BaseAccountEntity {
+@Table(name = "categories")
+public class Category extends BaseAccountEntity {
 
     private int budget;
+
+    private boolean isSpend;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

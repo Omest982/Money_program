@@ -3,7 +3,6 @@ package com.Omest982.Money_program.service.Imp;
 import com.Omest982.Money_program.model.Wallet;
 import com.Omest982.Money_program.repository.WalletRepository;
 import com.Omest982.Money_program.service.WalletService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public class WalletServiceImp implements WalletService {
 
     private final WalletRepository walletRepository;
 
-    @Autowired
+
     public WalletServiceImp(WalletRepository walletRepository) {
         this.walletRepository = walletRepository;
     }

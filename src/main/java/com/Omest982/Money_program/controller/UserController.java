@@ -1,6 +1,7 @@
 package com.Omest982.Money_program.controller;
 
 import com.Omest982.Money_program.dto.UserDTO;
+import com.Omest982.Money_program.dto.UserLoginDTO;
 import com.Omest982.Money_program.model.User;
 import com.Omest982.Money_program.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/get")
-    public User get(@RequestParam String email, @RequestParam String password){
-        return userService.getUser(email, password);
+    @PostMapping("/get")
+    public User get(@RequestBody UserLoginDTO userLoginDTO){
+        return userService.getUserByUsernameAndPassword(userLoginDTO.getUsername(), userLoginDTO.getPassword());
     }
 
     @DeleteMapping("/deleteAll")
     public void deleteAll() {
         userService.deleteAll();
     }
-
 
 }

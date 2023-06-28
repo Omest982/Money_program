@@ -14,7 +14,7 @@ public class WalletController {
     @Autowired
     WalletService walletService;
 
-    @PostMapping("/add")
+    @PostMapping
     public String add(@RequestBody Wallet wallet){
         walletService.saveWallet(wallet);
         return "New wallet is added";

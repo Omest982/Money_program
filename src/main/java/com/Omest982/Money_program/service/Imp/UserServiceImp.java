@@ -5,6 +5,8 @@ import com.Omest982.Money_program.model.Status;
 import com.Omest982.Money_program.model.User;
 import com.Omest982.Money_program.repository.UserRepository;
 import com.Omest982.Money_program.service.UserService;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,20 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImp implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImp(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
 
         if(user == null){
-            throw  new UsernameNotFoundException("Username not found!");
+            throw  new UsernameNotFoundException("Username " + username + " not found!");
         }
 
         List<GrantedAuthority> roles = new ArrayList<>();
@@ -54,13 +55,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User getUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     @Override

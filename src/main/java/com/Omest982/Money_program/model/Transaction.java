@@ -1,8 +1,5 @@
-package com.Omest982.Money_program.model.base;
+package com.Omest982.Money_program.model;
 
-import com.Omest982.Money_program.model.User;
-import com.Omest982.Money_program.model.Wallet;
-import com.Omest982.Money_program.model.base.BaseAccountEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
+@Entity
+@Table(name = "transactions")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +30,8 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "wallet_id", nullable = false)
     private Wallet wallet;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 }

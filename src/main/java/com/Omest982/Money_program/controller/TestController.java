@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @Controller
 @RestController
 public class TestController {
@@ -13,8 +15,8 @@ public class TestController {
     }
 
     @GetMapping("/authenticated")
-    public String authenticated(){
-        return "authenticated";
+    public String authenticated(Principal principal){
+        return principal.getName();
     }
 
     @GetMapping("/forUser")
