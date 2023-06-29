@@ -1,0 +1,16 @@
+#configuration
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: jdbc:mysql://localhost:3306/coinsaver
+    username: Omest982
+    password: 66vd52df
+    driver-class-name: com.mysql.cj.jdbc.Driver
+jwt:
+  secret: testProgram
+  lifetime: 30m
+
